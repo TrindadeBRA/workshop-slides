@@ -1,28 +1,23 @@
 import { useState, useEffect, useCallback } from 'react'
-import { slidesByDay, dayLabels } from './slides'
+import { slides } from './slides'
 import * as persistence from './utils/persistence'
 import Slide from './components/Slide'
 import Timer from './components/Timer'
 import Navigation from './components/Navigation'
 import SlideList from './components/SlideList'
-import DaySelector from './components/DaySelector'
 import './App.css'
 
 function App() {
-  const [currentDay, setCurrentDay] = useState(() => persistence.loadSelectedDay())
   const [currentSlide, setCurrentSlide] = useState(() => {
-    const saved = persistence.loadState(currentDay)
-    const totalSlides = slidesByDay[currentDay]?.length || 0
-    if (saved && saved.currentSlide < totalSlides) return saved.currentSlide
+    const saved = persistence.loadState('day1')
+    if (saved && saved.currentSlide < slides.length) return saved.currentSlide
     return 0
   })
   const [startTime, setStartTime] = useState(() => {
-    const saved = persistence.loadState(currentDay)
+    const saved = persistence.loadState('day1')
     return saved?.startTime || Date.now()
   })
   const [showList, setShowList] = useState(false)
-
-  const slides = slidesByDay[currentDay] || []
 
   const goNext = useCallback(() => {
     setCurrentSlide(prev => Math.min(prev + 1, slides.length - 1))
@@ -37,34 +32,9 @@ function App() {
     setShowList(false)
   }, [])
 
-  const handleDayChange = useCallback((newDay) => {
-    // Save current day's state before switching
-    persistence.saveState(currentDay, { currentSlide, startTime })
-
-    // Save selected day
-    persistence.saveSelectedDay(newDay)
-
-    // Load new day's state
-    const saved = persistence.loadState(newDay)
-    const totalSlides = slidesByDay[newDay]?.length || 0
-
-    // Update all state
-    setCurrentDay(newDay)
-
-    if (saved) {
-      // Validate slide index against new day's total slides
-      setCurrentSlide(saved.currentSlide < totalSlides ? saved.currentSlide : 0)
-      setStartTime(saved.startTime)
-    } else {
-      // No saved data for the new day — start fresh
-      setCurrentSlide(0)
-      setStartTime(Date.now())
-    }
-  }, [currentDay, currentSlide, startTime])
-
   useEffect(() => {
-    persistence.saveState(currentDay, { currentSlide, startTime })
-  }, [currentSlide, startTime, currentDay])
+    persistence.saveState('day1', { currentSlide, startTime })
+  }, [currentSlide, startTime])
 
   useEffect(() => {
     const handleKey = (e) => {
@@ -73,21 +43,20 @@ function App() {
       if (e.key === 'Escape') setShowList(false)
       if (e.key === 'l' || e.key === 'L') setShowList(prev => !prev)
       if (e.key === 'r' || e.key === 'R') {
-        if (window.confirm('Resetar progresso do dia atual? Isso voltará ao slide 0 e reiniciará o timer.')) {
+        if (window.confirm('Resetar progresso? Isso voltará ao slide 0 e reiniciará o timer.')) {
           setCurrentSlide(0)
           setStartTime(Date.now())
-          persistence.clearState(currentDay)
+          persistence.clearState('day1')
         }
       }
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [goNext, goPrev, currentDay])
+  }, [goNext, goPrev])
 
   return (
     <div className="app">
       <div className="top-bar">
-        <DaySelector currentDay={currentDay} onDayChange={handleDayChange} />
         <Timer startTime={startTime} />
         <div className="slide-counter">
           <button className="list-btn" onClick={() => setShowList(!showList)} title="Lista de slides (L)">☰</button>
