@@ -44,7 +44,54 @@ export const day1 = [
     ]
   },
 
-  // ===== SLIDE 4 - CONTEXTO: SPEC-DRIVEN =====
+  // ===== SLIDE 4 - POWERUP UDS: O QUE É =====
+  {
+    title: 'PowerUP UDS — O que é',
+    badge: 'bloco',
+    badgeLabel: 'PowerUP UDS',
+    content: [
+      { type: 'h1', text: 'PowerUP UDS' },
+      { type: 'h2', text: 'Kiro Power com 20 tools MCP para a UDS Tecnologia' },
+      { type: 'p', text: 'Um Kiro Power que conecta o agente ao MCP Server da UDS, trazendo padrões, análise e automação direto na IDE.' },
+      { type: 'table', headers: ['Categoria', 'O que oferece'], rows: [
+        ['Padrões UDS', 'Código, layout, arquitetura, GitLab, CI/CD, Docker, AWS'],
+        ['Análise (Bedrock)', 'Auditoria com Claude Opus (7 passes), bug hunter, feature review'],
+        ['Testes', 'Estratégia, quality gates, checklist de review'],
+        ['Knowledge Base', 'Busca semântica em documentos internos da UDS'],
+        ['Activity Tracking', 'Registro de atividades do agente por sessão'],
+        ['Utilitários', 'Health check, echo, AWS info, steering updates'],
+      ]},
+      { type: 'highlight', title: '🔧 Auto-Setup:', text: 'Na primeira interação, o Power cria automaticamente steerings e hooks no workspace — autonomous.md, no_mock_data.md, token_optimization.md e mcp-tools-guide.md.' },
+    ]
+  },
+
+  // ===== SLIDE 5 - POWERUP UDS: INSTALAÇÃO E TOOLS =====
+  {
+    title: 'PowerUP UDS — Instalação e Tools',
+    badge: 'bloco',
+    badgeLabel: 'PowerUP UDS',
+    content: [
+      { type: 'h2', text: 'Instalação' },
+      { type: 'table', headers: ['Método', 'Como'], rows: [
+        ['Via Kiro (recomendado)', 'Powers → Install from file → selecione uds-mcp-power.zip (app.mcp.udstec.io)'],
+        ['Manual', 'git clone + cd uds-mcp-power + bash setup.sh'],
+        ['Sem navegador', 'bash setup.sh --legacy <email> <senha>'],
+      ]},
+      { type: 'highlight', title: '🔐 Autenticação OAuth 2.1:', text: 'Na primeira interação o Kiro abre o navegador. Você faz login com credenciais UDS e a API key é gerada e salva automaticamente no mcp.json.' },
+      { type: 'h2', text: '20 Tools disponíveis' },
+      { type: 'list', items: [
+        '7 tools de padrões UDS (código, layout, GitLab, CI/CD, Docker, AWS, mock data)',
+        '4 tools Bedrock: code_auditor (Opus), feature_review, bug_hunter, knowledge_documentation',
+        '3 tools de testes: test_strategy_guide, test_quality_gates, test_code_review_checklist',
+        '1 tool Knowledge Base: knowledge_search (busca semântica)',
+        '1 tool de tracking: report_activity',
+        '4 utilitários: mcp_health_check, mcp_echo, mcp_aws_info, get_steering_updates',
+      ]},
+      { type: 'highlight', title: '⚠️ Tools Bedrock:', text: 'code_auditor e similares não acessam o filesystem. O agente lê os arquivos, concatena no formato // === arquivo: path === e passa no campo codebase (limite ~50KB).' },
+    ]
+  },
+
+  // ===== SLIDE 6 - CONTEXTO: SPEC-DRIVEN =====
   {
     title: 'Contexto: Spec-Driven Development',
     badge: 'bloco',
