@@ -13,7 +13,27 @@ export const day1 = [
     ]
   },
 
-  // ===== SLIDE 2 - BLOCO 1: SETUP =====
+  // ===== SLIDE 2 - LOGIN KIRO =====
+  {
+    title: 'Login no Kiro — Conta UDS',
+    badge: 'bloco',
+    badgeLabel: 'Setup',
+    content: [
+      { type: 'h2', text: 'Login no Kiro com a conta UDS' },
+      { type: 'p', text: 'O Kiro usa o SSO da UDS para autenticação. Siga os passos abaixo na tela de login:' },
+      { type: 'olist', items: [
+        'Abra o Kiro — a tela de login vai aparecer automaticamente',
+        'Clique em "Your organization  Sign in →"',
+        'Quando solicitado, informe a URL do portal SSO: uds.awsapps.com/start',
+        'Faça login com suas credenciais UDS (e-mail e senha corporativos)',
+        'Se aparecer a opção "Sign in via IAM Identity Center instead", clique nela',
+        'Após autenticar, o Kiro abre com seu nome no canto — login concluído',
+      ]},
+      { type: 'highlight', title: '💡 Dica:', text: 'Se a tela travar ou não redirecionar, feche e reabra o Kiro. O login via SSO depende do navegador padrão do sistema.' },
+    ]
+  },
+
+  // ===== SLIDE 3 - BLOCO 1: SETUP =====
   {
     title: 'Bloco 1 — Setup e Sanity Check',
     badge: 'bloco',
